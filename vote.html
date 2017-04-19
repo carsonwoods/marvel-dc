@@ -10,29 +10,60 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
-    <!-- link to jquery for calling ajax functions -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-
-    <!-- link to ajax for udpating google form -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <!-- link to ajax for calling ajax functions -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- link to moment for changing voting options at certain times -->
     <script language="javascript" src="./javascript/moment.min.js"></script>
 
-    <!-- implement ajax for updating spreadsheets (maybe) -->
+    <!-- implement ajax for updating spreadsheets -->
     <script language="javascript">
-			function vote(question1, question2, question3, question4, question5, question6, question7){
+
+    var question1 = "";
+    var question2 = "";
+    var question3 = "";
+    var question4 = "";
+    var question5 = "";
+    var question6 = "";
+    var question7 = "";
+
+    function setQuestion1(choice) {
+      question1 = choice
+    }
+
+    function setQuestion2(choice) {
+      question2 = choice
+    }
+
+    function setQuestion3(choice) {
+      question3 = choice
+    }
+
+    function setQuestion4(choice) {
+      question4 = choice
+    }
+
+    function setQuestion5(choice) {
+      question5 = choice
+    }
+
+    function setQuestion6(choice) {
+      question6 = choice
+    }
+
+    function setQuestion7(choice) {
+      question7 = choice
+    }
+
+			function recordVote(){
         // Ajax function to submit answers for round one votes
 				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1321771121" : question1, "entry.387556487" : question2,
-                "entry.1992971107" : question3, "entry.1855259533" : question4,
-                "entry.1608409130": question5, "entry.355768653": question6,
-                "entry.1841527091": question7},
+					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/formResponse",
+					data: {"entry.1321771121" : question1, "entry.387556487" : question2, "entry.1992971107" : question3, "entry.1855259533" : question4, "entry.1608409130" : question5, "entry.355768653" : question6, "entry.1841527091" : question7},
 					type: "POST",
 					dataType: "xml",
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
+						alert(errorThrown);
 					}
 				});
 			}
@@ -70,38 +101,39 @@
   </head>
 
   <body>
+    <script language="javascript"> document.cookie="voted=0"</script>
 
     <div id="round1">
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 1</button>
+          <button type="button" class="btn btn-default" onclick="setQuestion1(1)">Green Arrow</button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 2</button>
-        </div>
-      </div>
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 3</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 4</button>
+          <button type="button" class="btn btn-default" onclick="setQuestion1(2)">Flash</button>
         </div>
       </div>
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 5</button>
+          <button type="button" class="btn btn-default" onclick="setQuestion2(3)">Thor</button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 6</button>
+          <button type="button" class="btn btn-default" onclick="setQuestion2(4)">Superman</button>
         </div>
       </div>
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 7</button>
+          <button type="button" class="btn btn-default" onclick="setQuestion3(5)">Captain America</button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Option 8</button>
+          <button type="button" class="btn btn-default" onclick="setQuestion3(6)">Doctor Strange</button>
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" onclick="setQuestion4(7)">Iron Man</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default" onclick="setQuestion4(8)">Batman</button>
         </div>
       </div>
     </div>
@@ -136,7 +168,7 @@
       </div>
     </div>
 
-    <button id="submitButton">Submit</button>
+    <button id="submitButton" type="button" class="btn btn-default" onclick="recordVote()">Submit</button>
     <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/ojs220j/public/basic?alt=json-in-script&callback=vote" type="text/javascript"></script>
 
   </body>
