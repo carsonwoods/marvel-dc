@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Superhero Bracket Results</title>
+
+    <!-- allows for scaling on mobile devices -->
+    <meta name=viewport content="width=device-width, initial-scale=1">
+
+    <!-- links stylesheets and incorporates bootstrap for prettiness -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <!-- link to moment for changing voting options at certain times -->
+    <script language="javascript" src="./javascript/moment.min.js"></script>
+
+    <!-- this is the script to pull data from the google spreadsheet and create variables for each character -->
+    <script type='text/javascript'>
+
+      function bracketResults(json) {
+
+        var content = "";
+        var content2 = "";
+
+
+        var character1 = (json.feed.entry[0].content.$t).split(': ');
+        var character2 = (json.feed.entry[0].content.$t).split(': ');
+        var character3 = (json.feed.entry[0].content.$t).split(': ');
+        var character4 = (json.feed.entry[0].content.$t).split(': ');
+        var character5 = (json.feed.entry[0].content.$t).split(': ');
+        var character6 = (json.feed.entry[0].content.$t).split(': ');
+        var character7 = (json.feed.entry[0].content.$t).split(': ');
+        var character8 = (json.feed.entry[0].content.$t).split(': ');
+
+        content += [
+
+						].join('');
+
+        document.getElementById('contentArea').innerHTML = content;
+      }
+
+    </script>
+
+  </head>
+
+  <body>
+    <button id="submitButton">Submit</button>
+    <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/ojs220j/public/basic?alt=json-in-script&callback=vote" type="text/javascript"></script>
+
+  </body>
+</html>

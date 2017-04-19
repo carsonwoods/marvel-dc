@@ -10,6 +10,9 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
+    <!-- link to jquery for calling ajax functions -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
     <!-- link to ajax for udpating google form -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 
@@ -18,11 +21,14 @@
 
     <!-- implement ajax for updating spreadsheets (maybe) -->
     <script language="javascript">
-			function vote1(vote){
-        // Ajax function to submit answers for question 1-1
+			function vote(question1, question2, question3, question4, question5, question6, question7){
+        // Ajax function to submit answers for round one votes
 				$.ajax({
 					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1321771121" : vote},
+					data: {"entry.1321771121" : question1, "entry.387556487" : question2,
+                "entry.1992971107" : question3, "entry.1855259533" : question4,
+                "entry.1608409130": question5, "entry.355768653": question6,
+                "entry.1841527091": question7},
 					type: "POST",
 					dataType: "xml",
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -31,11 +37,12 @@
 				});
 			}
 
-      function vote2(vote){
-        // Ajax function to submit answers for question 1-2
+      /**
+      function round2(question5, question6){
+        // Ajax function to submit answers for round two votes
 				$.ajax({
 					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.387556487" : vote},
+					data: {"entry.1608409130": question5, "entry.355768653": question6},
 					type: "POST",
 					dataType: "xml",
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -44,11 +51,11 @@
 				});
 			}
 
-      function vote3(vote){
-        // Ajax function to submit answers for question 1-3
+      function round3(question7){
+        // Ajax function to submit answers for round 3 votes
 				$.ajax({
 					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1992971107" : vote},
+					data: {"entry.1841527091" : question7},
 					type: "POST",
 					dataType: "xml",
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -56,90 +63,79 @@
 					}
 				});
 			}
-
-      function vote4(vote){
-        // Ajax function to submit answers for question 1-4
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1855259533" : vote},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
-					}
-				});
 			}
-
-      function vote5(vote){
-        // Ajax function to submit answers for question 2-1
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.160840913" : vote},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
-					}
-				});
-			}
-
-      function vote6(vote){
-        // Ajax function to submit answers for question 2-2
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.355768653" : vote},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
-					}
-				});
-			}
-
-      function vote7(vote){
-        // Ajax function to submit answers for question 3-1
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1841527091" : vote},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
-					}
-				});
-			}
+      **/
 		</script>
-
-    <!-- this is the script to pull data from the google spreadsheet and create variables for each character -->
-    <script type='text/javascript'>
-
-      function bracketResults(json) {
-
-        var content = "";
-        var content2 = "";
-
-
-        var character1 = (json.feed.entry[0].content.$t).split(': ');
-        var character2 = (json.feed.entry[0].content.$t).split(': ');
-        var character3 = (json.feed.entry[0].content.$t).split(': ');
-        var character4 = (json.feed.entry[0].content.$t).split(': ');
-        var character5 = (json.feed.entry[0].content.$t).split(': ');
-        var character6 = (json.feed.entry[0].content.$t).split(': ');
-        var character7 = (json.feed.entry[0].content.$t).split(': ');
-        var character8 = (json.feed.entry[0].content.$t).split(': ');
-
-        content += [
-
-						].join('');
-
-        document.getElementById('contentArea').innerHTML = content;
-      }
-
-    </script>
 
   </head>
 
   <body>
+
+    <div id="round1">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 1</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 2</button>
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 3</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 4</button>
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 5</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 6</button>
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 7</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Option 8</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="round2">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Right</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Left</button>
+        </div>
+      </div>
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Right</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Left</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="round3">
+      <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Right</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-default">Left</button>
+        </div>
+      </div>
+    </div>
+
     <button id="submitButton">Submit</button>
     <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/ojs220j/public/basic?alt=json-in-script&callback=vote" type="text/javascript"></script>
 
