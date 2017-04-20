@@ -19,6 +19,7 @@
     <!-- implement ajax for updating spreadsheets -->
     <script language="javascript">
 
+    //creates global variables for all answers
     var question1 = "";
     var question2 = "";
     var question3 = "";
@@ -63,39 +64,11 @@
 					type: "POST",
 					dataType: "xml",
 					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert(errorThrown);
+            //lol never uncomment this it works but still errors shhh its fine
+            //alert(errorThrown);
 					}
 				});
 			}
-
-      /**
-      function round2(question5, question6){
-        // Ajax function to submit answers for round two votes
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1608409130": question5, "entry.355768653": question6},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
-					}
-				});
-			}
-
-      function round3(question7){
-        // Ajax function to submit answers for round 3 votes
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/viewform?usp=sf_link",
-					data: {"entry.1841527091" : question7},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-						alert("some error");
-					}
-				});
-			}
-			}
-      **/
 		</script>
 
   </head>
