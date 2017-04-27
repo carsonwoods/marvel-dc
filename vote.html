@@ -28,6 +28,7 @@
     var question6 = "";
     var question7 = "";
 
+    //records user choice when user hits a button
     function setQuestion1(choice) {
       question1 = choice
     }
@@ -56,19 +57,47 @@
       question7 = choice
     }
 
-			function recordVote(){
-        // Ajax function to submit answers for round one votes
-				$.ajax({
-					url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/formResponse",
-					data: {"entry.1321771121" : question1, "entry.387556487" : question2, "entry.1992971107" : question3, "entry.1855259533" : question4, "entry.1608409130" : question5, "entry.355768653" : question6, "entry.1841527091" : question7},
-					type: "POST",
-					dataType: "xml",
-					error: function(XMLHttpRequest, textStatus, errorThrown) {
-            //lol never uncomment this it works but still errors shhh its fine
-            //alert(errorThrown);
-					}
-				});
-			}
+		function recordVote(){
+      // Ajax function to submit answers for round one votes
+			$.ajax({
+				url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/formResponse",
+				data: {"entry.1321771121" : question1, "entry.387556487" : question2, "entry.1992971107" : question3, "entry.1855259533" : question4, "entry.1608409130" : question5, "entry.355768653" : question6, "entry.1841527091" : question7},
+				type: "POST",
+				dataType: "xml",
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+          //lol never uncomment this it works but still errors shhh its fine
+          //alert(errorThrown);
+				}
+			});
+		}
+
+    function results(json) {
+
+      var content = "";
+
+      var rawResults = (json.feed.entry[0].content.$t);
+      var roundResults = rawResults.split(", ")
+
+      var round1A = roundResults[0].split(":")[1]
+      var round1B = roundResults[1].split(":")[1]
+      var round1C = roundResults[2].split(":")[1]
+      var round1D = roundResults[3].split(":")[1]
+      var round2A = roundResults[4].split(":")[1]
+      var round2B = roundResults[5].split(":")[1]
+      var round3A = roundResults[6].split(":")[1]
+
+      document.getElementById('contentArea').innerHTML = content;
+
+
+      document.getElementById('button9').innerHTML = round1A;
+      document.getElementById('button10').innerHTML = round1B;
+      document.getElementById('button11').innerHTML = round1C;
+      document.getElementById('button12').innerHTML = round1D;
+      document.getElementById('button13').innerHTML = round2A;
+      document.getElementById('button14').innerHTML = round2B;
+
+    }
+
 		</script>
 
   </head>
@@ -114,35 +143,38 @@
     <div id="round2">
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Right</button>
+          <button id="button9" type="button" class="btn btn-default"></button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Left</button>
+          <button id="button10" type="button" class="btn btn-default"></button>
         </div>
       </div>
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Right</button>
+          <button id="button11" type="button" class="btn btn-default"></button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Left</button>
+          <button id="button12" type="button" class="btn btn-default"></button>
         </div>
       </div>
     </div>
-
     <div id="round3">
       <div class="btn-group btn-group-justified" role="group" aria-label="...">
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Right</button>
+          <button id="button13" type="button" class="btn btn-default"></button>
         </div>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default">Left</button>
+          <button id="button14" type="button" class="btn btn-default"></button>
         </div>
       </div>
     </div>
 
+    <!-- This link is in case I need to access new worksheets if need be. Just for reference because I hate finding it every time -->
+    <!-- https://spreadsheets.google.com/feeds/worksheets/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/private/full -->
+
     <button id="submitButton" type="button" class="btn btn-default" onclick="recordVote()">Submit</button>
-    <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/ojs220j/public/basic?alt=json-in-script&callback=vote" type="text/javascript"></script>
+    <div id="contentArea"></div>
+    <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/o3ayhm4/public/basic?alt=json-in-script&callback=results" type="text/javascript"></script>
 
   </body>
 </html>
