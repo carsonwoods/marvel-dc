@@ -86,17 +86,22 @@
       var round2B = roundResults[5].split(":")[1]
       var round3A = roundResults[6].split(":")[1]
 
-      document.getElementById('contentArea').innerHTML = content;
-
-
       document.getElementById('button9').innerHTML = round1A;
       document.getElementById('button10').innerHTML = round1B;
       document.getElementById('button11').innerHTML = round1C;
       document.getElementById('button12').innerHTML = round1D;
       document.getElementById('button13').innerHTML = round2A;
       document.getElementById('button14').innerHTML = round2B;
-
     }
+
+    //sets current time when page loads
+    var now = moment()
+
+    //starts at this point the bracket will start and will be used for all future time calculations
+    var bracketStartTime = moment()
+
+    if (now.isAfter(bracketStartTime.hour()+1)
+
 
 		</script>
 
@@ -105,66 +110,69 @@
   <body>
     <script language="javascript"> document.cookie="voted=0"</script>
 
-    <div id="round1">
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion1(1)">Green Arrow</button>
+    <div id="choiceButtons">
+      <div id="round1">
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion1(1)" style="height:100px;">Green Arrow</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion1(2)" style="height:100px;">Flash</button>
+          </div>
         </div>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion1(2)">Flash</button>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion2(3)" style="height:100px;">Thor</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion2(4)" style="height:100px;">Superman</button>
+          </div>
+        </div>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion3(5)" style="height:100px;">Captain America</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion3(6)" style="height:100px;">Doctor Strange</button>
+          </div>
+        </div>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion4(7)" style="height:100px;">Iron Man</button>
+          </div>
+          <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" onclick="setQuestion4(8)" style="height:100px;">Batman</button>
+          </div>
         </div>
       </div>
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion2(3)">Thor</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion2(4)">Superman</button>
-        </div>
-      </div>
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion3(5)">Captain America</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion3(6)">Doctor Strange</button>
-        </div>
-      </div>
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion4(7)">Iron Man</button>
-        </div>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-default" onclick="setQuestion4(8)">Batman</button>
-        </div>
-      </div>
-    </div>
 
-    <div id="round2">
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button id="button9" type="button" class="btn btn-default"></button>
+      <div id="round2">
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button id="button9" type="button" class="btn btn-default" style="height:100px;"></button>
+          </div>
+          <div class="btn-group" role="group">
+            <button id="button10" type="button" class="btn btn-default" style="height:100px;"></button>
+          </div>
         </div>
-        <div class="btn-group" role="group">
-          <button id="button10" type="button" class="btn btn-default"></button>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button id="button11" type="button" class="btn btn-default" style="height:100px;"></button>
+          </div>
+          <div class="btn-group" role="group">
+            <button id="button12" type="button" class="btn btn-default" style="height:100px;"></button>
+          </div>
         </div>
       </div>
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button id="button11" type="button" class="btn btn-default"></button>
-        </div>
-        <div class="btn-group" role="group">
-          <button id="button12" type="button" class="btn btn-default"></button>
-        </div>
-      </div>
-    </div>
-    <div id="round3">
-      <div class="btn-group btn-group-justified" role="group" aria-label="...">
-        <div class="btn-group" role="group">
-          <button id="button13" type="button" class="btn btn-default"></button>
-        </div>
-        <div class="btn-group" role="group">
-          <button id="button14" type="button" class="btn btn-default"></button>
+
+      <div id="round3">
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button id="button13" type="button" class="btn btn-default" style="height:100px;"></button>
+          </div>
+          <div class="btn-group" role="group">
+            <button id="button14" type="button" class="btn btn-default" style="height:100px;"></button>
+          </div>
         </div>
       </div>
     </div>
@@ -172,9 +180,7 @@
     <!-- This link is in case I need to access new worksheets if need be. Just for reference because I hate finding it every time -->
     <!-- https://spreadsheets.google.com/feeds/worksheets/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/private/full -->
 
-    <button id="submitButton" type="button" class="btn btn-default" onclick="recordVote()">Submit</button>
-    <div id="contentArea"></div>
+    <button id="submitButton" type="button" class="btn btn-default" onclick="recordVote()"  style="margin-left:47.85%;">Submit</button>
     <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/o3ayhm4/public/basic?alt=json-in-script&callback=results" type="text/javascript"></script>
-
   </body>
 </html>
