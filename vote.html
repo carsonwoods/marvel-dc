@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,6 +17,11 @@
     <!-- link to moment for changing voting options at certain times -->
     <script language="javascript" src="./javascript/moment.min.js"></script>
 
+	<style>
+		.hidden {visibility:hidden;}
+		.btn-group-justified {margin:1em 0;}
+		</style>
+
     <!-- implement ajax for updating spreadsheets -->
     <script language="javascript">
 
@@ -30,35 +36,85 @@
 
     //records user choice when user hits a button
     function setQuestion1(choice) {
-      question1 = choice
+      question1 = choice;
+	  if (choice == 1) {
+		document.getElementById('button1').className = "btn btn-success";
+		document.getElementById('button2').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button2').className = "btn btn-success";
+		document.getElementById('button1').className = "btn btn-default";
+	  }
     }
 
     function setQuestion2(choice) {
-      question2 = choice
+      question2 = choice;
+	  if (choice == 3) {
+		document.getElementById('button3').className = "btn btn-success";
+		document.getElementById('button4').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button4').className = "btn btn-success";
+		document.getElementById('button3').className = "btn btn-default";
+	  }
     }
 
     function setQuestion3(choice) {
-      question3 = choice
-    }
+      question3 = choice;
+ 	  if (choice == 5) {
+		document.getElementById('button5').className = "btn btn-success";
+		document.getElementById('button6').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button6').className = "btn btn-success";
+		document.getElementById('button5').className = "btn btn-default";
+	  }
+   }
 
     function setQuestion4(choice) {
-      question4 = choice
-    }
+      question4 = choice;
+  	  if (choice == 7) {
+		document.getElementById('button7').className = "btn btn-success";
+		document.getElementById('button8').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button8').className = "btn btn-success";
+		document.getElementById('button7').className = "btn btn-default";
+	  }
+   }
 
     function setQuestion5(choice) {
-      question5 = choice
-    }
+      question5 = choice;
+   	  if (choice < 3) {
+		document.getElementById('button9').className = "btn btn-success";
+		document.getElementById('button10').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button10').className = "btn btn-success";
+		document.getElementById('button9').className = "btn btn-default";
+	  }
+   }
 
     function setQuestion6(choice) {
-      question6 = choice
-    }
+      question6 = choice;
+		if (choice < 7) {
+		document.getElementById('button11').className = "btn btn-success";
+		document.getElementById('button12').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button12').className = "btn btn-success";
+		document.getElementById('button11').className = "btn btn-default";
+	  }
+   }
 
     function setQuestion7(choice) {
-      question7 = choice
-    }
+      question7 = choice;
+ 		if (choice < 5) {
+		document.getElementById('button13').className = "btn btn-success";
+		document.getElementById('button14').className = "btn btn-default";
+	  } else {
+	  	document.getElementById('button14').className = "btn btn-success";
+		document.getElementById('button13').className = "btn btn-default";
+	  }
+   }
 
 		function recordVote(){
       // Ajax function to submit answers for round one votes
+
 			$.ajax({
 				url: "https://docs.google.com/forms/d/e/1FAIpQLSfN7EqFehJ7As2_WOCR3WKr162ReIKHi0cog7wZQ9W-Mp5wWQ/formResponse",
 				data: {"entry.1321771121" : question1, "entry.387556487" : question2, "entry.1992971107" : question3, "entry.1855259533" : question4, "entry.1608409130" : question5, "entry.355768653" : question6, "entry.1841527091" : question7},
@@ -67,13 +123,52 @@
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
           //lol never uncomment this it works but still errors shhh its fine
           //alert(errorThrown);
-				}
+				},
+
+
 			});
+			setTimeout(function(){
+			}, 1000);
+			window.location.href = "http://adventuresci.org/waylate"
+
 		}
+
+	var round1end = moment.utc("2017-04-28 01:00:00.000");
+	var round2end = moment.utc("2017-04-28 02:00:00.000");
+	var round3end = moment.utc("2017-04-28 02:45:00.000");
+
+
+	window.onload = function () {
+		if (moment().isBefore(round1end)) {
+			console.log("It's round 1!");
+			var round2 = document.getElementById('round2');
+			round2.className += " hidden";
+			document.getElementById('round3').className += " hidden";
+			} else if (moment().isBefore(round2end)) {
+			document.getElementById('round1').className += " hidden";
+			document.getElementById('round3').className += " hidden";
+			console.log("It's round 2!");
+		} else if (moment().isBefore(round3end)) {
+			document.getElementById('round1').className += " hidden";
+			document.getElementById('round2').className += " hidden";
+			console.log("It's round 3!");
+		}
+	};
 
     function results(json) {
 
       var content = "";
+
+      var initialChoices = (json.feed.entry[2].content.$t);
+      var initialChoicessplit = initialChoices.split(", ")
+      var round0A = initialChoicessplit[0].split(":")[1]
+      var round0B = initialChoicessplit[1].split(":")[1]
+      var round0C = initialChoicessplit[2].split(":")[1]
+      var round0D = initialChoicessplit[3].split(":")[1]
+      var round0E = initialChoicessplit[4].split(":")[1]
+      var round0F = initialChoicessplit[5].split(":")[1]
+      var round0G = initialChoicessplit[6].split(":")[1]
+      var round0H = initialChoicessplit[7].split(":")[1]
 
       var rawResults = (json.feed.entry[0].content.$t);
       var roundResults = rawResults.split(", ")
@@ -86,14 +181,40 @@
       var round2B = roundResults[5].split(":")[1]
       var round3A = roundResults[6].split(":")[1]
 
+      var rawResultsb = (json.feed.entry[1].content.$t);
+      var roundResultsb = rawResultsb.split(", ")
+      var round1Ab = roundResultsb[0].split(":")[1]
+      var round1Bb = roundResultsb[1].split(":")[1]
+      var round1Cb = roundResultsb[2].split(":")[1]
+      var round1Db = roundResultsb[3].split(":")[1]
+      var round2Ab = roundResultsb[4].split(":")[1]
+      var round2Bb = roundResultsb[5].split(":")[1]
+      var round3Ab = roundResultsb[6].split(":")[1]
+
+      document.getElementById('button1').innerHTML = round0A;
+      document.getElementById('button2').innerHTML = round0B;
+      document.getElementById('button3').innerHTML = round0C;
+      document.getElementById('button4').innerHTML = round0D;
+      document.getElementById('button5').innerHTML = round0E;
+      document.getElementById('button6').innerHTML = round0F;
+      document.getElementById('button7').innerHTML = round0G;
+      document.getElementById('button8').innerHTML = round0H;
+
       document.getElementById('button9').innerHTML = round1A;
       document.getElementById('button10').innerHTML = round1B;
       document.getElementById('button11').innerHTML = round1C;
       document.getElementById('button12').innerHTML = round1D;
+      document.getElementById('button9').onclick = function () { setQuestion5(round1Ab) };
+      document.getElementById('button10').onclick = function () { setQuestion5(round1Bb) };
+      document.getElementById('button11').onclick = function () { setQuestion6(round1Cb) };
+      document.getElementById('button12').onclick = function () { setQuestion6(round1Db) };
+
       document.getElementById('button13').innerHTML = round2A;
       document.getElementById('button14').innerHTML = round2B;
+      document.getElementById('button13').onclick = function () { setQuestion7(round2Ab) };
+      document.getElementById('button14').onclick = function () { setQuestion7(round2Bb) };
     }
-		</script>
+	</script>
 
   </head>
 
@@ -101,42 +222,42 @@
     <script language="javascript"> document.cookie="voted=0"</script>
 
     <div id="choiceButtons">
-      <div id="round1">
+      <div id="round1" class="container">
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion1(1)" style="height:100px;">Green Arrow</button>
+            <button id="button1" type="button" class="btn btn-default" onclick="setQuestion1(1)" style="height:100px;"></button>
           </div>
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion1(2)" style="height:100px;">Flash</button>
+            <button id="button2" type="button" class="btn btn-default" onclick="setQuestion1(2)" style="height:100px;"></button>
           </div>
         </div>
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion2(3)" style="height:100px;">Thor</button>
+            <button id="button3" type="button" class="btn btn-default" onclick="setQuestion2(3)" style="height:100px;"></button>
           </div>
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion2(4)" style="height:100px;">Superman</button>
-          </div>
-        </div>
-        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion3(5)" style="height:100px;">Captain America</button>
-          </div>
-          <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion3(6)" style="height:100px;">Doctor Strange</button>
+            <button id="button4" type="button" class="btn btn-default" onclick="setQuestion2(4)" style="height:100px;"></button>
           </div>
         </div>
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion4(7)" style="height:100px;">Iron Man</button>
+            <button id="button5" type="button" class="btn btn-default" onclick="setQuestion3(5)" style="height:100px;"></button>
           </div>
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" onclick="setQuestion4(8)" style="height:100px;">Batman</button>
+            <button id="button6" type="button" class="btn btn-default" onclick="setQuestion3(6)" style="height:100px;"></button>
+          </div>
+        </div>
+        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+          <div class="btn-group" role="group">
+            <button id="button7" type="button" class="btn btn-default" onclick="setQuestion4(7)" style="height:100px;"></button>
+          </div>
+          <div class="btn-group" role="group">
+            <button id="button8" type="button" class="btn btn-default" onclick="setQuestion4(8)" style="height:100px;"></button>
           </div>
         </div>
       </div>
 
-      <div id="round2">
+      <div id="round2" class="container">
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
           <div class="btn-group" role="group">
             <button id="button9" type="button" class="btn btn-default" style="height:100px;"></button>
@@ -155,7 +276,7 @@
         </div>
       </div>
 
-      <div id="round3">
+      <div id="round3" class="container">
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
           <div class="btn-group" role="group">
             <button id="button13" type="button" class="btn btn-default" style="height:100px;"></button>
@@ -165,12 +286,16 @@
           </div>
         </div>
       </div>
-    </div>
+
 
     <!-- This link is in case I need to access new worksheets if need be. Just for reference because I hate finding it every time -->
     <!-- https://spreadsheets.google.com/feeds/worksheets/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/private/full -->
 
-    <button id="submitButton" type="button" class="btn btn-default" onclick="recordVote()"  style="margin-left:47.85%;">Submit</button>
+		<div class="container">
+			<button id="submitButton" type="button" class="btn btn-default btn-block" onclick="recordVote()">Submit</button>
+		</div>
+	</div>
+
     <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/o3ayhm4/public/basic?alt=json-in-script&callback=results" type="text/javascript"></script>
   </body>
 </html>

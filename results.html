@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,33 +13,143 @@
 
     <!-- link to moment for changing voting options at certain times -->
     <script language="javascript" src="./javascript/moment.min.js"></script>
+	<script type="text/javascript" src="../../resources/jquery-2.2.0.min.js"></script>
+
 
     <!-- this is the script to pull data from the google spreadsheet and create variables for each character -->
     <script type='text/javascript'>
+
+
+		// File: signage.js
+		loadData();
+		setInterval(loadData, 1000);
+
+		// Start function when DOM has completely loaded
+		function loadData() {
+			daysOutput = '';
+			var endround3 = moment.utc("2017-04-28 02:00:00.000");
+			var now = moment();
+			minDiff = endround3.diff(now,'minutes');
+			secDiff = endround3.diff(now,'seconds');
+
+			minOutput = minDiff;
+			secOutput = secDiff - minDiff * 60;
+			if (secOutput < 10) {
+				secOutput = "0"+secOutput; //adding leading zero for single-digit seconds
+			}
+
+			$("#minCount").html(minOutput);
+			$("#secCount").html(secOutput);
+
+		};
+
 
       function results(json) {
 
         var content = "";
         var content2 = "";
 
-        var character1 = (json.feed.entry[0].content.$t).split(':');
+      var initialChoices = (json.feed.entry[2].content.$t);
+      var initialChoicessplit = initialChoices.split(", ")
+      var round0A = initialChoicessplit[0].split(":")[1]
+      var round0B = initialChoicessplit[1].split(":")[1]
+      var round0C = initialChoicessplit[2].split(":")[1]
+      var round0D = initialChoicessplit[3].split(":")[1]
+      var round0E = initialChoicessplit[4].split(":")[1]
+      var round0F = initialChoicessplit[5].split(":")[1]
+      var round0G = initialChoicessplit[6].split(":")[1]
+      var round0H = initialChoicessplit[7].split(":")[1]
 
-        content += [
-          '<span id="test" class="info">',
-          character1,
-          '</span>'
-						].join('');
 
-        document.getElementById('contentArea').innerHTML = content;
+        var rawlist = (json.feed.entry[0].content.$t)+'';
+        var firstpass = rawlist.split(": ").join(",");
+        var nextpass = firstpass.split(", ").join(",");
+        var finallist = nextpass.split(',');
+
+        round1a = finallist[1];
+        round1b = finallist[3];
+        round1c = finallist[5];
+        round1d = finallist[7];
+
+        round2a = finallist[9];
+        round2b = finallist[11];
+
+        round3a = finallist[13];
+
+        document.getElementById('round0a').innerHTML = round0A;
+        document.getElementById('round0b').innerHTML = round0B;
+        document.getElementById('round0c').innerHTML = round0C;
+        document.getElementById('round0d').innerHTML = round0D;
+        document.getElementById('round0e').innerHTML = round0E;
+        document.getElementById('round0f').innerHTML = round0F;
+        document.getElementById('round0g').innerHTML = round0G;
+        document.getElementById('round0h').innerHTML = round0H;
+        document.getElementById('round1a').innerHTML = round1a;
+        document.getElementById('round1b').innerHTML = round1b;
+        document.getElementById('round1c').innerHTML = round1c;
+        document.getElementById('round1d').innerHTML = round1d;
+        //document.getElementById('round2a').innerHTML = round2a;
+        //document.getElementById('round2b').innerHTML = round2b;
       }
 
     </script>
+
+    		<style>
+			@import url('https://fonts.googleapis.com/css?family=Muli:300,700,900');
+			body {
+				font-family: 'Muli', sans-serif;
+				font-weight:300;
+				background-color:red;
+				background-image: url(bracket.png);
+				background-size:100%;
+				background-repeat:no-repeat;
+				color:white;
+				padding:0;
+				margin:0;
+				text-transform:uppercase;
+				font-size:2vw;
+				font-weight:400;
+				}
+			.choice {position:absolute; width:12vw;line-height:2vw;font-weight:700;}
+			#round0a, #round0b, #round0c, #round0d, #round1a, #round1b, #round2a {text-align:right;}
+			#round0a, #round0b, #round0c, #round0d {right:82vw}
+			#round0e, #round0f, #round0g, #round0h {left:81vw}
+			#round0a, #round0e {top:15.5vw;}
+			#round0b, #round0f {top:25.2vw;}
+			#round0c, #round0g {top:34.8vw;}
+			#round0d, #round0h {top:44.5vw;}
+			#round1a, #round1b {right:69vw}
+			#round1c, #round1d {left:68vw}
+			#round1a, #round1c {top:20.2vw;}
+			#round1b, #round1d {top:39.6vw;}
+			#round2a {right:55vw}
+			#round2b {left:54vw}
+			#round2a, #round2b {top:30vw;}
+			#round3a {text-align:center; width:100vw;top:48vw;font-weight:900;font-size:3vw;line-height:3vw}
+		</style>
 
   </head>
 
   <body>
 
     <div id="contentArea"></div>
+
+    <div id="round0a" class="choice"></div>
+    <div id="round0b" class="choice"></div>
+    <div id="round0c" class="choice"></div>
+    <div id="round0d" class="choice"></div>
+    <div id="round0e" class="choice"></div>
+    <div id="round0f" class="choice"></div>
+    <div id="round0g" class="choice"></div>
+    <div id="round0h" class="choice"></div>
+    <div id="round1a" class="choice"></div>
+    <div id="round1b" class="choice"></div>
+    <div id="round1c" class="choice"></div>
+    <div id="round1d" class="choice"></div>
+    <div id="round2a" class="choice"></div>
+    <div id="round2b" class="choice"></div>
+    <div id="round3a" class="choice"><span id="minCount"></span>:<span id="secCount"></span> left in this round!<br/>Vote at adventuresci.org/showdown</div>
+
     <script src="https://spreadsheets.google.com/feeds/list/15F1MpVMBnakjD1GPMUgvKbjh9ZjNrqEzu7dwaoHM0eA/o3ayhm4/public/basic?alt=json-in-script&callback=results" type="text/javascript"></script>
 
   </body>
